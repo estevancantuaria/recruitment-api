@@ -1,9 +1,21 @@
 from unittest.mock import Mock, patch
+from unittest import mock
+import pytest
 from src.models.sqlite.repositories.youngster_repository import YoungsterRepository
 from src.models.sqlite.entities.users import Jovem
+from mock_alchemy.mocking import UnifiedAlchemyMagicMock
 class MockConnection:
     def __init__(self) -> None:
-        self.session = Mock()
+        self.session = UnifiedAlchemyMagicMock(
+            data=[
+                (
+                    [mock.call.query(Jovem)],
+                    [Jovem(nome="Pessoa", email="estevan@gmail.com", senha="123456", cpf="1234567890",
+                           telefone="1234567890", ativo=True, tipo_usuario="JOVEM", rg="12334444",
+                           data_nascimento="2000-01-01")]
+                )
+            ]
+        )
     
     def __enter__(self):
         return self
@@ -36,8 +48,12 @@ def test_insert_youngster():
 def test_get_youngster_by_id():
     mock_connection = MockConnection()
     repository = YoungsterRepository(mock_connection)
+    
     jovem = repository.get_youngster_by_id(1)
+
     assert jovem is not None
+    assert jovem.nome == "Pessoa"
+    assert jovem.email == "estevan@gmail.com"
     
     mock_connection.session.query.assert_called_once()
     mock_connection.session.query.assert_called_with(Jovem)
@@ -52,6 +68,15 @@ def test_delete_youngster():
     mock_connection.session.delete.assert_called_once()
     mock_connection.session.commit.assert_called_once()
     
+def test_update_youngster():
+    mock_connection = MockConnection()
+    repository = YoungsterRepository(mock_connection)    
+    repository.update_youngster(5, "Marcos", "marcos@gmail.com", "123456", "1234567890", "1234567890", True, "JOVEM", "1234567890", "2000-01-01")
+    
+    mock_connection.session.query.assert_called_once_with(Jovem)
+    mock_connection.session.query().filter.assert_called_once()
+    mock_connection.session.query().filter().one.assert_called_once()
+    mock_connection.session.commit.assert_called_once()
     
     
   
