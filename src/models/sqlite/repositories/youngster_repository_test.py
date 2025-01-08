@@ -70,12 +70,17 @@ def test_delete_youngster():
     
 def test_update_youngster():
     mock_connection = MockConnection()
-    repository = YoungsterRepository(mock_connection)    
-    repository.update_youngster(5, "Marcos", "marcos@gmail.com", "123456", "1234567890", "1234567890", True, "JOVEM", "1234567890", "2000-01-01")
+    repository = YoungsterRepository(mock_connection) 
+    
+    update_data = {
+        "id": 5,
+        "nome": "Matheus",
+        "data_nascimento": "1999-01-01"
+    }
+    repository.update_youngster(update_data)
     
     mock_connection.session.query.assert_called_once_with(Jovem)
-    mock_connection.session.query().filter.assert_called_once()
-    mock_connection.session.query().filter().one.assert_called_once()
+    mock_connection.session.query().get.assert_called_once()
     mock_connection.session.commit.assert_called_once()
     
     

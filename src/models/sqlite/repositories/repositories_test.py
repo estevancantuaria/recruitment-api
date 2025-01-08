@@ -46,20 +46,15 @@ def test_get_youngster_by_id():
     assert jovem is not None
     
 
+
 def test_update_youngster():
     repository = YoungsterRepository(db_connection_handler)
-    repository.update_youngster(
-        id=5, 
-        nome="Caio", 
-        email="caio@gmail.com", 
-        senha="123456", 
-        cpf="1234567890", 
-        telefone="1234567890", 
-        ativo=True, 
-        tipo_usuario="JOVEM", 
-        rg="1234567890", 
-        data_nascimento="2000-01-01"
-    )
+    update_data = {
+        "id": 5,
+        "nome": "Raquel",
+        "data_nascimento": "1999-01-01"
+    }
+    repository.update_youngster(update_data)
 
 # 
 # def test_delete_youngster():
