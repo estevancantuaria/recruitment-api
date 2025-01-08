@@ -25,4 +25,28 @@ CREATE TABLE recrutadores (
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
+CREATE TABLE endereco (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    rua TEXT(100) NOT NULL,
+    numero TEXT(10) NOT NULL,
+    complemento TEXT(50),
+    bairro TEXT(50),
+    cidade TEXT(50) NOT NULL,
+    estado TEXT(50) NOT NULL,
+    cep TEXT(20) NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE escolaridade (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    nivel TEXT(50) NOT NULL, -- Ex: Ensino Fundamental, Ensino Médio, Graduação, etc.
+    instituicao TEXT(100) NOT NULL,
+    ano_conclusao INTEGER,
+    periodo_serie TEXT(50), -- Ex: 1º ano, 2º semestre, etc.
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+
 

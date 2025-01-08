@@ -1,11 +1,5 @@
-import pytest
-from datetime import datetime
 from unittest.mock import Mock, patch
-from sqlalchemy.orm import Session
-from mock_alchemy.mocking import UnifiedAlchemyMagicMock
 from src.models.sqlite.repositories.youngster_repository import YoungsterRepository
-from src.models.sqlite.entities.users import Jovem
-
 
 class MockConnection:
     def __init__(self) -> None:
@@ -37,6 +31,7 @@ def test_insert_youngster():
 
     # Assert
     mock_connection.session.add.assert_called_once()
+    mock_connection.session.commit.assert_called_once()
     
     
     
