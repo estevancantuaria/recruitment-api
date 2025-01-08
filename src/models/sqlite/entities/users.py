@@ -1,5 +1,8 @@
 from sqlalchemy import Column, String, BIGINT, ForeignKey, Boolean, Date
+from sqlalchemy.orm import relationship
 from src.models.sqlite.settings.base import Base
+from src.models.sqlite.entities.address import Address
+from src.models.sqlite.entities.education import Escolaridade
 
 class User(Base):
     __tablename__ = "users"
@@ -11,6 +14,9 @@ class User(Base):
     telefone = Column(String(50), nullable=False, unique=True)
     ativo = Column(Boolean, nullable=False)
     tipo_usuario = Column(String(50), nullable=False)
+    
+    addresses = relationship(Address, backref="user", cascade="all, delete-orphan")
+    escolaridade = relationship(Escolaridade, backref="user", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"User(id={self.id}, name={self.name}, email={self.email}, senha={self.senha}, cpf={self.cpf}, telefone={self.telefone}, ativo={self.ativo}, tipo_usuario={self.tipo_usuario})"

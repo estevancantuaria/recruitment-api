@@ -30,6 +30,28 @@ class YoungsterRepository(IYoungsterRepository):
             except Exception as e:
                 database.session.rollback()
                 raise e
-        
+    
+    def get_youngster_by_id(self, id: int) -> Jovem:
+        with self.__db_connection as database:
+            try:
+                jovem = (
+                    database.session.query(Jovem)
+                    .filter(Jovem.id == id)
+                    .one()
+                )
+                return jovem
+            except Exception as e:
+                raise e
+            
+    def delete_youngster(self, id: int) -> None:
+        with self.__db_connection as database:
+            try:
+                jovem = database.session.query(Jovem).filter(Jovem.id == id).one()
+                database.session.delete(jovem)
+                database.session.commit()
+            except Exception as e:
+                database.session.rollback()
+                raise e
+            
     def __convert_to_date(self, data_nascimento: str) -> datetime:
         return datetime.strptime(data_nascimento, "%Y-%m-%d").date()

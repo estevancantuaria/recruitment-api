@@ -23,7 +23,7 @@ def test_insert_youngster():
 def test_insert_address():
     repository = AddressRepository(db_connection_handler)
     repository.insert_address(
-        1,
+        3,
         "Rua Teste",
         "123",
         "Complemento Teste",
@@ -32,8 +32,21 @@ def test_insert_address():
         "Estado TO",
         "77002018"
     )
-    
+
+@pytest.mark.skip(reason="interacao com o banco") 
 def test_insert_education():
     repository = EducationRepository(db_connection_handler)
-    repository.insert_education(1, "Ensino Fundamental", "Escola Teste", 2020, "1º ano")
+    repository.insert_education(3, "Ensino Fundamental", "Escola Teste", 2020, "1º ano")
+    
+@pytest.mark.skip(reason="interacao com o banco") 
+def test_get_youngster_by_id():
+    repository = YoungsterRepository(db_connection_handler)
+    jovem = repository.get_youngster_by_id(3)
+    assert jovem is not None
+
+@pytest.mark.skip(reason="interacao com o banco") 
+def test_delete_youngster():
+    repository = YoungsterRepository(db_connection_handler)
+    repository.delete_youngster(3)
+
 

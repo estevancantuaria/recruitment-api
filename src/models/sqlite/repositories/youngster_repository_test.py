@@ -1,6 +1,6 @@
 from unittest.mock import Mock, patch
 from src.models.sqlite.repositories.youngster_repository import YoungsterRepository
-
+from src.models.sqlite.entities.users import Jovem
 class MockConnection:
     def __init__(self) -> None:
         self.session = Mock()
@@ -32,6 +32,30 @@ def test_insert_youngster():
     # Assert
     mock_connection.session.add.assert_called_once()
     mock_connection.session.commit.assert_called_once()
+
+def test_get_youngster_by_id():
+    mock_connection = MockConnection()
+    repository = YoungsterRepository(mock_connection)
+    jovem = repository.get_youngster_by_id(1)
+    assert jovem is not None
+    
+    mock_connection.session.query.assert_called_once()
+    mock_connection.session.query.assert_called_with(Jovem)
+    mock_connection.session.query().filter.assert_called_once()
+    mock_connection.session.query().filter().one.assert_called_once()
+    
+def test_delete_youngster():
+    mock_connection = MockConnection()
+    repository = YoungsterRepository(mock_connection)
+    repository.delete_youngster(1)
+    
+    mock_connection.session.delete.assert_called_once()
+    mock_connection.session.commit.assert_called_once()
+    
+    
+    
+  
+    
     
     
     

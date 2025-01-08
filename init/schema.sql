@@ -14,7 +14,7 @@ CREATE TABLE jovens (
     user_id INTEGER NOT NULL,
     rg TEXT(50) NOT NULL UNIQUE,
     data_nascimento DATE NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE recrutadores (
@@ -22,7 +22,7 @@ CREATE TABLE recrutadores (
     user_id INTEGER NOT NULL,
     empresa TEXT(50) NOT NULL,
     cargo TEXT(50) NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE endereco (
@@ -35,7 +35,7 @@ CREATE TABLE endereco (
     cidade TEXT(50) NOT NULL,
     estado TEXT(50) NOT NULL,
     cep TEXT(20) NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE escolaridade (
@@ -45,8 +45,5 @@ CREATE TABLE escolaridade (
     instituicao TEXT(100) NOT NULL,
     ano_conclusao INTEGER,
     periodo_serie TEXT(50), -- Ex: 1º ano, 2º semestre, etc.
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
-
-
