@@ -19,3 +19,14 @@ class EducationRepository(IEducationRepository):
                 database.session.commit()
             except Exception as e:
                 database.session.rollback()
+    
+    def list_all_education(self):
+        with self.__db_connection as database:
+            educations = database.session.query(Escolaridade).all()
+            return educations
+    
+    def delete_education(self, id: int):
+        with self.__db_connection as database:
+            education = database.session.query(Escolaridade).filter(Escolaridade.id == id).first()
+            database.session.delete(education)
+            database.session.commit()

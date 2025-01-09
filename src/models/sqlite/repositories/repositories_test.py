@@ -47,6 +47,7 @@ def test_get_youngster_by_id():
     
 
 
+@pytest.mark.skip(reason="interacao com o banco") 
 def test_update_youngster():
     repository = YoungsterRepository(db_connection_handler)
     update_data = {
@@ -56,9 +57,36 @@ def test_update_youngster():
     }
     repository.update_youngster(update_data)
 
-# 
-# def test_delete_youngster():
-#     repository = YoungsterRepository(db_connection_handler)
-#     repository.delete_youngster(5)
+
+@pytest.mark.skip(reason="interacao com o banco") 
+def test_delete_youngster():
+    repository = YoungsterRepository(db_connection_handler)
+    repository.delete_youngster(5)
+ 
+
+@pytest.mark.skip(reason="interacao com o banco")  
+def test_list_all_education():
+    repository = EducationRepository(db_connection_handler)
+    educations = repository.list_all_education()
+    assert educations is not None
+
+@pytest.mark.skip(reason="interacao com o banco")  
+def test_delete_education():
+    repository = EducationRepository(db_connection_handler)
+    repository.delete_education(6)
+
+@pytest.mark.skip(reason="interacao com o banco")  
+def test_delete_address():
+    repository = AddressRepository(db_connection_handler)
+    repository.delete_address(4)
+
+@pytest.mark.skip(reason="interacao com o banco")
+def test_get_address_by_user_id():
+    repository = AddressRepository(db_connection_handler)
+    address = repository.get_address_by_user_id(5)
+    assert address is not None
+
+
+
 
 

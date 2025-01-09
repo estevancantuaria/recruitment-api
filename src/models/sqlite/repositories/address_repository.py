@@ -24,3 +24,14 @@ class AddressRepository(IAddressRepository):
             except Exception as e:
                 database.session.rollback()
                 raise e
+
+    def delete_address(self, user_id: int) -> None:
+        with self.__db_connection as database:
+            address = database.session.query(Address).filter(Address.user_id == user_id).first()
+            database.session.delete(address)
+            database.session.commit()
+    
+    def get_address_by_user_id(self, user_id: int) -> Address:
+        with self.__db_connection as database:
+            address = database.session.query(Address).filter(Address.user_id == user_id).first()
+            return address
