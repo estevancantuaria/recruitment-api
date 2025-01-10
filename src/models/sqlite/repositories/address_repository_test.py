@@ -20,6 +20,7 @@ class MockConnection:
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
+    
 def test_insert_address():
     mock_connection = MockConnection()
     repository = AddressRepository(mock_connection)

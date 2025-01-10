@@ -3,7 +3,7 @@ from src.models.sqlite.entities.users import Jovem
 
 class IYoungsterRepository(ABC):
     @abstractmethod
-    def insert_youngster(self, name: str, email: str, senha: str, cpf: str, telefone: str, ativo: bool, tipo_usuario: str, rg: str, data_nascimento: str) -> None:
+    def insert_youngster(self, nome: str, email: str, senha: str, cpf: str, telefone: str, ativo: bool, tipo_usuario: str, rg: str, data_nascimento: str) -> None:
         pass
     
     @abstractmethod
@@ -12,4 +12,8 @@ class IYoungsterRepository(ABC):
     
     @abstractmethod
     def get_youngster_by_id(self, id: int) -> Jovem:
+        pass
+    
+    @abstractmethod
+    def update_youngster(self, update_data: dict) -> None:
         pass
