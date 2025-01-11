@@ -4,13 +4,14 @@ import pytest
 from src.models.sqlite.repositories.youngster_repository import YoungsterRepository
 from src.models.sqlite.entities.users import Jovem
 from mock_alchemy.mocking import UnifiedAlchemyMagicMock
+from src.utils.convert_string_to_date import convert_string_to_date
 class MockConnection:
     def __init__(self) -> None:
         self.session = UnifiedAlchemyMagicMock(
             data=[
                 (
                     [mock.call.query(Jovem)],
-                    [Jovem(nome="Pessoa", email="estevan@gmail.com", senha="123456", cpf="1234567890",
+                    [Jovem(id=5,nome="Pessoa", email="estevan@gmail.com", senha="123456", cpf="1234567890",
                            telefone="1234567890", ativo=True, tipo_usuario="JOVEM", rg="12334444",
                            data_nascimento="2000-01-01")]
                 )
@@ -77,7 +78,13 @@ def test_update_youngster():
         "nome": "Matheus",
         "data_nascimento": "1999-01-01"
     }
-    repository.update_youngster(update_data)
+    result =repository.update_youngster(update_data)
+    
+    assert result.nome == "Matheus"
+    
+    converted_date = convert_string_to_date(update_data["data_nascimento"])
+    
+    assert result.data_nascimento == converted_date
     
     mock_connection.session.query.assert_called_once_with(Jovem)
     mock_connection.session.query().get.assert_called_once()

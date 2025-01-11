@@ -1,6 +1,6 @@
-from datetime import datetime
-from src.models.sqlite.entities.users import Jovem, User
+from src.models.sqlite.entities.users import Jovem
 from src.models.sqlite.interfaces.youngster_repository import IYoungsterRepository
+from src.utils.convert_string_to_date import convert_string_to_date
 
 class YoungsterRepository(IYoungsterRepository):
     def __init__(self, db_connection) -> None:
@@ -8,7 +8,7 @@ class YoungsterRepository(IYoungsterRepository):
         
     def insert_youngster(self, nome: str, email: str, senha: str, cpf: str, telefone: str, ativo: bool, tipo_usuario: str, rg: str, data_nascimento: str) -> None:
         
-        converted_date = self.__convert_to_date(data_nascimento)
+        converted_date = convert_string_to_date(data_nascimento)
         
         with self.__db_connection as database:
             try:
@@ -57,18 +57,18 @@ class YoungsterRepository(IYoungsterRepository):
         with self.__db_connection as database:
             try:
                 youngster_to_update = database.session.query(Jovem).get(update_data['id'])
-                self.__update_youngster_attributes(youngster_to_update, update_data)
+                updated_youngster = self.__update_youngster_attributes(youngster_to_update, update_data)
                 database.session.commit()
+                return updated_youngster
             except Exception as e:
                 database.session.rollback()
                 raise e
-            
-    def __convert_to_date(self, data_nascimento: str) -> datetime:
-        return datetime.strptime(data_nascimento, "%Y-%m-%d").date()
-    
+                
     def __update_youngster_attributes(self, youngster: Jovem, update_data: dict) -> None:
         for key, value in update_data.items():
             if hasattr(youngster, key):
                 if key == 'data_nascimento':
-                    value = self.__convert_to_date(value)
+                    value = convert_string_to_date(value)
                 setattr(youngster, key, value)
+        return youngster
+        

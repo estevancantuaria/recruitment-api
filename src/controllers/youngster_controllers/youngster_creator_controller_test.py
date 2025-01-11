@@ -27,3 +27,5 @@ def test_create_youngster():
             "attributes": youngster_info
         }
     }
+    
+    assert response['data']['attributes']['nome'] == youngster_info['nome']
