@@ -20,6 +20,7 @@ def test_create_youngster():
     }
     
     response = youngster_creator_controller.create(youngster_info)
+    
     assert response == {
         "data": {
             "type": "youngster",

@@ -22,7 +22,7 @@ class YoungsterCreatorController(IYoungsterCreatorController):
         
         self.__youngster_repository.insert_youngster(nome, email, senha, cpf, telefone, ativo, tipo_usuario, rg, data_nascimento)
         formatted_response = self.__format_response(youngster_info)
-        
+        print(formatted_response)
         return formatted_response
         
     def __format_response(self, youngster_info: Dict) -> Dict:
