@@ -1,3 +1,4 @@
+from sqlalchemy.orm.exc import NoResultFound
 from src.models.sqlite.entities.users import Jovem
 from src.models.sqlite.interfaces.youngster_repository import IYoungsterRepository
 from src.utils.convert_string_to_date import convert_string_to_date
@@ -40,8 +41,8 @@ class YoungsterRepository(IYoungsterRepository):
                     .one()
                 )
                 return jovem
-            except Exception as e:
-                raise e
+            except NoResultFound:
+                return None
             
     def delete_youngster(self, id: int) -> None:
         with self.__db_connection as database:

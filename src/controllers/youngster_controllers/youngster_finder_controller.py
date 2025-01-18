@@ -1,15 +1,21 @@
 from src.controllers.interfaces.youngster_controllers.youngster_finder_controller import IYoungsterFinderController
 from src.models.sqlite.repositories.youngster_repository import IYoungsterRepository
 from src.models.sqlite.entities.users import Jovem
-
+from src.errors.error_types.http_not_found import HttpNotFoundError
 class YoungsterFinderController(IYoungsterFinderController):
     def __init__(self, youngster_repository: IYoungsterRepository):
         self.__youngster_repository = youngster_repository
         
-    def find_by_id(self, id: int) -> Jovem:
+    def find_by_id(self, id: int) -> Jovem:    
+        response = self.__find_person_in_db(id)
+        return self.__format_response(response)
+    
+    def __find_person_in_db(self, id: int) -> Jovem:
         response = self.__youngster_repository.get_youngster_by_id(id)
-        formated_response = self.__format_response(response)
-        return formated_response
+  
+        if not response:
+            raise HttpNotFoundError("Jovem não encontrado")
+        return response
     
     def __format_response(self, jovem: Jovem) -> dict:
         return {
