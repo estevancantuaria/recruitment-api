@@ -1,5 +1,5 @@
 from src.domain.models.users import Youngster
-from src.infra.repositories.interfaces.youngster_repository import IYoungsterRepository
+from src.domain.interfaces.youngster_repository import IYoungsterRepository
 from datetime import date
 
 class YoungsterRepository(IYoungsterRepository):
