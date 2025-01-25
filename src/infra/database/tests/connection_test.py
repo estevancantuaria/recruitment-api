@@ -2,7 +2,6 @@ import pytest
 from src.infra.database.connection import db_connection_handler
 from sqlalchemy.engine import Engine
 from sqlalchemy import text
-from sqlalchemy.exc import InvalidRequestError
 
 def test_connect_to_db():
     assert db_connection_handler.get_engine() is None
