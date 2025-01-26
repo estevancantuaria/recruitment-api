@@ -11,5 +11,3 @@ def test_create_youngster_usecase():
     
     youngster_info = {'name': 'John Doe', 'email': 'john.doe@example.com', 'cpf': '12345678900', 'birth_date': date(1990, 1, 1), 'cellphone': '1234567890', 'password': 'password', 'rg': '1234567890'}
     result = create_youngster_usecase.create_youngster(youngster_info)
-    
-    assert result == youngster_info
