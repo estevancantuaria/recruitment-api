@@ -6,7 +6,7 @@ class YoungsterCreatorController:
         self.__create_youngster_usecase = create_youngster_usecase
 
     def create_youngster(self, youngster_info: dict) -> dict:
-        youngster_info = YoungsterInputDTO(**youngster_info)
+        # youngster_info = YoungsterInputDTO(**youngster_info)
         
         result = self.__create_youngster_usecase.create_youngster(youngster_info)
         
